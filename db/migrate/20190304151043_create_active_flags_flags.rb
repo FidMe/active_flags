@@ -3,11 +3,10 @@ class CreateActiveFlagsFlags < ActiveRecord::Migration[6.0]
     create_table :active_flags_flags do |t|
       t.string :key
       t.string :value
-      t.references :subject_id, foreign_key: true, null: false
-      t.string :subject_type, null: false
+      t.integer :subject_id
+      t.string :subject_type
 
       t.timestamps
     end
-    add_index :active_flags_flags, [:subject_id, :subject_type]
   end
 end
