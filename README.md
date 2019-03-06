@@ -63,7 +63,7 @@ user.flags = [
 ```
 
 ## Contributing
-https://github.com/[USERNAME]/active_flags
+https://github.com/FidMe/active_flags
 
 ## License
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
