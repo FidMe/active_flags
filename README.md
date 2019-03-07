@@ -2,6 +2,8 @@
 Active Flags allows you to use automatic flags on models. You won't have to create useless booleans with view logic in your core tables. There place shouldn't have been there in the first place, let Active Flags handle them for you!
 
 ## Installation
+
+(You need at least rails 5.0 to use the gem)
 Add this line to your application's Gemfile:
 
 ```ruby
@@ -34,32 +36,34 @@ But you want it to be so relevant that it only makes active users (connecting of
 To do so you would add a boolean `active` or `visible` in your users' table.
 It works, but it is view logic and shouldn't be there. Imagine your app is growing and you have 10 more boolean on users, and then 10 more on another model. It will only pollute your tables.
 
-Once Active Flags is set, you can easily declare your model as flaggable like that:
+Once Active Flags is set, you can easily declare your model has flags like that:
+
 ```ruby
 class User < ApplicationRecord
-    act_as_flaggable
+  has_flags :visible, :active
 end
 ```
 
 And that's all!
-You can now add flags on a user with two possibilities.
-
-Either set the key-value as keys and content as values:
+You can now add flags on a user like that:
 
 ```ruby
-user.flags = [
-  { key: 'visible', value: 'true'},
-  { key: 'active', value: 'true'}
-]
+user.flags = { visible: 'true', active: 'true' }
 ```
 
-Or pass directly the pair key_name: content
+A flag won't be saved if you don't explicitly declare it as has_flags attributes in the model.
+
+But if you do not want to handle explicit flags, you could also declare:
 
 ```ruby
-user.flags = [
-  { visible: 'true'},
-  { active: 'true'}
-]
+class User < ApplicationRecord
+  has_flags
+end
+```
+
+And then you can declare as much flags as you want with no restriction:
+```ruby
+user.flags = { visible: 'true', active: 'true', diet: 'vegan', power: 'super saiyan' }
 ```
 
 ## Contributing
