@@ -1,3 +1,3 @@
 class User < ApplicationRecord
-  acts_as_flaggable
+  has_flags :visible, :hidden
 end
