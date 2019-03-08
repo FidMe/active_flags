@@ -31,4 +31,15 @@ class UserTest < ActiveSupport::TestCase
     assert_equal 1, user.flags.count
     assert_equal 'visible', user.flags.first[:key]
   end
+
+  test "user can create flags with keys as strings with arrows" do
+    user = User.create(last_name: 'Huberty')
+
+    user.update!(flags: {
+      'visible' => 'true',
+      'hidden' => 'true'
+    })
+
+    assert_equal 2, user.flags.count
+  end
 end
