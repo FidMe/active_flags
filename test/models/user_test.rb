@@ -6,7 +6,7 @@ class UserTest < ActiveSupport::TestCase
 
     user.update!(flags: {visible: 'true'})
 
-    assert_instance_of ActiveFlags::Flag, user.flags.first
+    assert_instance_of ActiveFlags::Flag, user.flags_as_collection.first
   end
 
   test "user can create several flags at a time" do
@@ -29,7 +29,7 @@ class UserTest < ActiveSupport::TestCase
     })
 
     assert_equal 1, user.flags.count
-    assert_equal 'visible', user.flags.first[:key]
+    assert user.flags[:visible]
   end
 
   test "user can create flags with keys as strings with arrows" do
@@ -41,5 +41,23 @@ class UserTest < ActiveSupport::TestCase
     })
 
     assert_equal 2, user.flags.count
+  end
+
+  test "user can call its flags by hash or collection" do
+    user = User.create(
+      last_name: 'Huberty',
+      flags: {
+        visible: 'true',
+        hidden: 'true'
+      }
+    )
+
+    assert_not_instance_of ActiveSupport::HashWithIndifferentAccess, user.flags_as_collection
+    assert_equal 2, user.flags_as_collection.count
+
+    assert_instance_of ActiveSupport::HashWithIndifferentAccess, user.flags
+    assert_equal 2, user.flags.count
+    assert user.flags[:visible]
+    assert user.flags['visible']
   end
 end

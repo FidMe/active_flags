@@ -7,6 +7,6 @@ class FlatTest < ActiveSupport::TestCase
     flat.update!(flags: {sangoku: 'true', vegeta: 'false'})
 
     assert_equal 2, flat.flags.count
-    assert_instance_of ActiveFlags::Flag, flat.flags.first
+    assert_instance_of ActiveFlags::Flag, flat.flags_as_collection.first
   end
 end
