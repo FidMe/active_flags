@@ -1,4 +1,9 @@
 # ActiveFlags
+
+[![Build Status](https://travis-ci.org/FidMe/active_flags.svg?branch=master)](https://travis-ci.org/FidMe/active_flags)
+[![Gem Version](https://badge.fury.io/rb/active_flags.svg)](https://badge.fury.io/rb/active_flags)
+
+
 Active Flags allows you to use automatic flags on models. You won't have to create useless booleans with view logic in your core tables. They should not have been there in the first place, let Active Flags handle them for you!
 
 ## Installation
