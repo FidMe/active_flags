@@ -26,11 +26,15 @@ module ActiveFlags
     end
 
     def method_missing(method_name, *args)
-      super(method_name, *args) unless method_name.to_s.starts_with?(prefix = 'flagged_as_')
-      flag = method_name.to_s.gsub(prefix, '')
+      super(method_name, *args) unless method_name.to_s.include?(prefix = 'flagged_as_')
+      different_from = method_name.to_s.starts_with?('not')
+      flag = method_name.to_s.gsub(different_from ? "not_#{prefix}" : prefix, '')
+      condition = { active_flags_flags: { value: stringify(args[0]) } }
 
       joins(:flags_as_collection)
-      .where(active_flags_flags: { key: flag, value: stringify(args[0]) })
+        .where(active_flags_flags: { key: flag })
+        .send(different_from ? 'where' : 'all')
+        .send(different_from ? 'not' : 'where', condition)
     end
   end
 end

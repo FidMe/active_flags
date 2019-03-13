@@ -15,7 +15,10 @@ class FlatTest < ActiveSupport::TestCase
     other_flat = Flat.create(name: "Nathan's other flat", flags: { sangoku: false })
 
     assert_includes Flat.flagged_as_sangoku, flat
+    assert_includes Flat.not_flagged_as_sangoku, other_flat
     assert_includes Flat.flagged_as_sangoku(false), other_flat
+
+    assert_not_includes Flat.not_flagged_as_sangoku(false), other_flat
     assert_not_includes Flat.flagged_as_sangoku(false), flat
     assert_not_includes Flat.flagged_as_sangoku, other_flat
   end
