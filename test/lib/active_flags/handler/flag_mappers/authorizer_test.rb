@@ -3,7 +3,7 @@ require 'test_helper'
 class ActiveFlags::Handler::FlagMappers::AuthorizerTest < ActiveSupport::TestCase
   test 'should authorize every flags if no authorized_flags passed' do
     authorized_flags = []
-    flags_to_check = {hidden: 'true', magic: 'false'}
+    flags_to_check = {hidden: true, magic: false}
     flags = ::ActiveFlags::Handler::FlagMappers::Authorizer.authorize(authorized_flags, flags_to_check)
 
     assert_equal 2, flags.count
@@ -11,7 +11,7 @@ class ActiveFlags::Handler::FlagMappers::AuthorizerTest < ActiveSupport::TestCas
 
   test 'should authorize only passed flags' do
     authorized_flags = [:hidden, :visible]
-    flags_to_check = {hidden: 'true', magic: 'false'}
+    flags_to_check = {hidden: true, magic: false}
     flags = ::ActiveFlags::Handler::FlagMappers::Authorizer.authorize(authorized_flags, flags_to_check)
 
     assert_equal 1, flags.count

@@ -3,7 +3,7 @@ require 'test_helper'
 class ActiveFlags::Handler::FlagMapperTest < ActiveSupport::TestCase
   test 'should authorize and remap flags' do
     authorized_flags = [:hidden, :visible]
-    hash_of_flags_to_check = {hidden: 'true', visible: 'false', dragonball: '4 on 7'}
+    hash_of_flags_to_check = {hidden: true, visible: false, dragonball: '4 on 7'}
     flags = ::ActiveFlags::Handler::FlagMapper.remap(authorized_flags, hash_of_flags_to_check)
 
     assert_equal 2, flags.count

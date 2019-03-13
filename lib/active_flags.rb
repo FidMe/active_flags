@@ -1,6 +1,7 @@
 require "active_flags/engine"
 require_relative 'active_flags/handler/flag_mapper'
 require_relative 'active_flags/handler/flag_builder'
+require_relative 'utils/value_stringifier'
 
 module ActiveFlags
   extend ActiveSupport::Concern
@@ -22,6 +23,14 @@ module ActiveFlags
         end
         hash_of_flags.with_indifferent_access
       end
+    end
+
+    def method_missing(method_name, *args)
+      super(method_name, *args) unless method_name.to_s.starts_with?(prefix = 'flagged_as_')
+      flag = method_name.to_s.gsub(prefix, '')
+
+      joins(:flags_as_collection)
+      .where(active_flags_flags: { key: flag, value: stringify(args[0]) })
     end
   end
 end
