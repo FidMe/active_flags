@@ -85,7 +85,6 @@ user = User.create!(flags: { visible: true })
 User.flagged_as_visible
 # #<ActiveRecord::Relation [#<User id: 1>]> 
 
-
 User.flagged_as_visible(false)
 # #<ActiveRecord::Relation []>
 
@@ -95,6 +94,18 @@ User.flagged_as_intelligent
 user.update!(flags: { intelligent: true })
 User.flagged_as_intelligent
 # #<ActiveRecord::Relation [#<User id: 1>]> 
+
+user.update!(flags: { intelligent: 'a bit' })
+User.flagged_as_intelligent('a_bit')
+# #<ActiveRecord::Relation [#<User id: 1>]> 
+```
+
+To query flags the other way around you can use the `not_flagged_as` method
+
+```ruby
+User.not_flagged_as_intelligent
+# or with value
+User.not_flagged_as_intelligent('a bit')
 ```
 
 
