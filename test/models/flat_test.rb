@@ -23,6 +23,16 @@ class FlatTest < ActiveSupport::TestCase
     assert_not_includes Flat.flagged_as_sangoku, other_flat
   end
 
+  test 'not_flagged_as also returns those for which key is nil' do
+    nathan = Flat.create(name: "Nathan's flat", flags: { sangoku: true })
+    not_sangoku = Flat.create(name: "Michael's flat", flags: { sangoku: false })
+    missing_flat = Flat.create(name: "Nathan's other flat")
+
+    assert_includes Flat.not_flagged_as_sangoku, not_sangoku
+    assert_includes Flat.not_flagged_as_sangoku, missing_flat
+    assert_not_includes Flat.not_flagged_as_sangoku, nathan
+  end
+
   test 'flags as scope takes optional value' do
     flat = Flat.create(name: "Nathan's flat", flags: { sangoku: 'nice' })
     other_flat = Flat.create(name: "Nathan's other flat", flags: { sangoku: 'mean' })
@@ -50,4 +60,6 @@ class FlatTest < ActiveSupport::TestCase
     assert Flat.respond_to?('flagged_as_coucou'), 'Method should exist'
     assert Flat.respond_to?('not_flagged_as_coucou'), 'Method should exist'
   end
+
+  
 end

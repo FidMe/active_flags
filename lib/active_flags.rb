@@ -33,15 +33,12 @@ module ActiveFlags
 
     def method_missing(method_name, *args, &block) 
       return super unless method_name.to_s.include?(prefix = ACTIVE_FLAGS_PREFIX)
-
       different_from = method_name.to_s.starts_with?('not')
       flag = method_name.to_s.gsub(different_from ? "not_#{prefix}" : prefix, '')
-      condition = { active_flags_flags: { value: stringify(args[0]) } }
+      result = joins(:flags_as_collection)
+        .where(active_flags_flags: { key: flag, value: stringify(args[0]) })
 
-      joins(:flags_as_collection)
-        .where(active_flags_flags: { key: flag })
-        .send(different_from ? 'where' : 'all')
-        .send(different_from ? 'not' : 'where', condition)
+      different_from ? where.not(id: result.pluck(:id)) : result
     end
   end
 end
