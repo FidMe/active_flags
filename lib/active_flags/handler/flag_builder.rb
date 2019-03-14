@@ -7,9 +7,10 @@ module ActiveFlags
       end
 
       def save
-        ActiveFlags::Flag.find_or_initialize_by(subject: @resource, key: @flag_attributes[:key])
-                         .update!(value: @flag_attributes[:value])
-        @resource.reload
+        flag = ActiveFlags::Flag.find_or_initialize_by(subject: @resource, key: @flag_attributes[:key])
+        flag.update!(value: @flag_attributes[:value])
+
+        @resource.flags_as_collection << flag
       end
     end
   end
