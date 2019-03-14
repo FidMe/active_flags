@@ -76,7 +76,7 @@ user.update!(flags: { visible: true, active: true, diet: 'vegan', power: 'super 
 To access your flags, you now have 2 ways.
 Either as a hash, with the `flags` method or as an ActiveFlag::Flags collection with the `flags_as_collection` method.
 
-## Flags as scopes
+## Flags as scopes
 
 When you develop an app without active_flags, you will generally query the equivalent of flags as simple booleans.
 
