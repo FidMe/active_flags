@@ -45,4 +45,9 @@ class FlatTest < ActiveSupport::TestCase
 
     assert_equal Flat.find_by_name('Michael'), Flat.find_by(name: 'Michael')
   end
+
+  test 'Flat responds_to flagged_as_* and not_flagged_as_* methods' do
+    assert Flat.respond_to?('flagged_as_coucou'), 'Method should exist'
+    assert Flat.respond_to?('not_flagged_as_coucou'), 'Method should exist'
+  end
 end

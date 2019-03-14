@@ -6,6 +6,8 @@ require_relative 'utils/value_stringifier'
 module ActiveFlags
   extend ActiveSupport::Concern
 
+  ACTIVE_FLAGS_PREFIX = 'flagged_as_'
+
   class_methods do
     def has_flags(*authorized_flags)
       has_many :flags_as_collection, class_name: 'ActiveFlags::Flag', as: :subject
@@ -25,10 +27,12 @@ module ActiveFlags
       end
     end
 
-    private
+    def respond_to_missing?(method_name, include_private = false)
+      method_name.to_s.include?(ACTIVE_FLAGS_PREFIX) || super
+    end
 
     def method_missing(method_name, *args, &block) 
-      return super unless method_name.to_s.include?(prefix = 'flagged_as_')
+      return super unless method_name.to_s.include?(prefix = ACTIVE_FLAGS_PREFIX)
 
       different_from = method_name.to_s.starts_with?('not')
       flag = method_name.to_s.gsub(different_from ? "not_#{prefix}" : prefix, '')
