@@ -38,4 +38,11 @@ class FlatTest < ActiveSupport::TestCase
   test 'flags as scope with inexistant scope fails nicely' do
     assert_empty Flat.flagged_as_caca
   end
+
+  test 'flags as scope does not break other method_missing' do
+    Flat.create!(name: 'Nathan')
+    Flat.create!(name: 'Michael')
+
+    assert_equal Flat.find_by_name('Michael'), Flat.find_by(name: 'Michael')
+  end
 end
