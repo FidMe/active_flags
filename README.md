@@ -49,7 +49,7 @@ And that's it!
 You can now add flags on a user like that:
 
 ```ruby
-user.flags = { visible: 'true', active: 'true' }
+user.flags = { visible: true, active: true }
 user.save!
 ```
 
@@ -65,11 +65,49 @@ end
 
 And then you can declare as much flags as you want with no restriction:
 ```ruby
-user.update!(flags: { visible: 'true', active: 'true', diet: 'vegan', power: 'super saiyan' })
+user.update!(flags: { visible: true, active: true, diet: 'vegan', power: 'super saiyan' })
 ```
 
 To access your flags, you now have 2 ways.
 Either as a hash, with the `flags` method or as an ActiveFlag::Flags collection with the `flags_as_collection` method.
+
+## Flags as scopes
+
+When you develop an app without active_flags, you will generally query the equivalent of flags as simple booleans.
+
+ActiveFlags gives you a clean and simple way to query your model based on defined flags.
+
+Any flag can be queried as a scope using the `flagged_as` method
+
+```ruby
+user = User.create!(flags: { visible: true })
+
+User.flagged_as_visible
+# #<ActiveRecord::Relation [#<User id: 1>]> 
+
+User.flagged_as_visible(false)
+# #<ActiveRecord::Relation []>
+
+User.flagged_as_intelligent
+# #<ActiveRecord::Relation []>
+
+user.update!(flags: { intelligent: true })
+User.flagged_as_intelligent
+# #<ActiveRecord::Relation [#<User id: 1>]> 
+
+user.update!(flags: { intelligent: 'a bit' })
+User.flagged_as_intelligent('a_bit')
+# #<ActiveRecord::Relation [#<User id: 1>]> 
+```
+
+To query flags the other way around you can use the `not_flagged_as` method
+
+```ruby
+User.not_flagged_as_intelligent
+# or with value
+User.not_flagged_as_intelligent('a bit')
+```
+
 
 ## Contributing
 https://github.com/FidMe/active_flags

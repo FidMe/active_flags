@@ -4,7 +4,7 @@ class UserTest < ActiveSupport::TestCase
   test "user has flags" do
     user = User.create(first_name: 'Nathan')
 
-    user.update!(flags: {visible: 'true'})
+    user.update!(flags: {visible: true})
 
     assert_instance_of ActiveFlags::Flag, user.flags_as_collection.first
   end
@@ -13,8 +13,8 @@ class UserTest < ActiveSupport::TestCase
     user = User.create(last_name: 'Huberty')
 
     user.update!(flags: {
-      visible: 'true',
-      hidden: 'true'
+      visible: true,
+      hidden: true
     })
 
     assert_equal 2, user.flags.count
@@ -24,8 +24,8 @@ class UserTest < ActiveSupport::TestCase
     user = User.create(last_name: 'Huberty')
 
     user.update!(flags: {
-      visible: 'true',
-      coucou: 'true'
+      visible: true,
+      coucou: true
     })
 
     assert_equal 1, user.flags.count
@@ -36,8 +36,8 @@ class UserTest < ActiveSupport::TestCase
     user = User.create(last_name: 'Huberty')
 
     user.update!(flags: {
-      'visible' => 'true',
-      'hidden' => 'true'
+      'visible' => true,
+      'hidden' => true
     })
 
     assert_equal 2, user.flags.count
@@ -47,8 +47,8 @@ class UserTest < ActiveSupport::TestCase
     user = User.create(
       last_name: 'Huberty',
       flags: {
-        visible: 'true',
-        hidden: 'true'
+        visible: true,
+        hidden: true
       }
     )
 

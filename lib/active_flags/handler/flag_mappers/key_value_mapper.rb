@@ -2,7 +2,6 @@ module ActiveFlags
   module Handler
     module FlagMappers
       class KeyValueMapper
-
         def initialize(hash_to_map)
           @hash_to_map = hash_to_map
         end
