@@ -61,5 +61,24 @@ class FlatTest < ActiveSupport::TestCase
     assert Flat.respond_to?('not_flagged_as_coucou'), 'Method should exist'
   end
 
-  
+  test "flags' values are returned as booleans" do
+    flat = Flat.create(
+      name: 'Palais de Dendé',
+      flags: {
+        visible: true,
+        hidden: false,
+        sangoku: 'true',
+        vegeta: 'false'
+      }
+    )
+
+    assert_not_instance_of ActiveSupport::HashWithIndifferentAccess, flat.flags_as_collection
+    assert_equal 4, flat.flags_as_collection.count
+    assert_respond_to flat.flags_as_collection.first, :value_converted
+    assert_instance_of ::TrueClass, flat.flags_as_collection.first.value_converted
+
+    assert_instance_of ActiveSupport::HashWithIndifferentAccess, flat.flags
+    assert_equal 4, flat.flags.count
+    assert_instance_of ::TrueClass, flat.flags.values.first
+  end
 end
