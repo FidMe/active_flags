@@ -74,9 +74,9 @@ user.update!(flags: { visible: true, active: true, diet: 'vegan', power: 'super 
 ```
 
 To access your flags, you now have 2 ways.
-Either as a hash, with the `flags` method or as an ActiveFlag::Flags collection with the `flags_as_collection` method.
+Either as a hash, with the `flags` method or as an ActiveFlag::Flag collection with the `flags_as_collection` method.
 
-Note: You can call `converted_value` on an `ActiveFlag::Flags` instance returned by flags_as_collection, to retrieved your 'true' or 'false' value as a boolean.
+Note: You can call `converted_value` on an `ActiveFlag::Flag` instance returned by flags_as_collection, to retrieved your 'true' or 'false' value as a boolean.
 
 ## Flags as scopes
 
