@@ -43,6 +43,22 @@ class UserTest < ActiveSupport::TestCase
     assert_equal 2, user.flags.count
   end
 
+  test "user can update the value of a flag" do
+    user = User.create(
+      last_name: 'Huberty',
+      flags: {
+        visible: 'true',
+        'hidden' => 'true'
+      }
+    )
+    assert_equal 2, user.flags.count
+
+    user.update!(flags: { hidden: 'false'})
+    assert_equal 2, user.flags.count
+    assert_equal false, user.flags[:hidden]
+  end
+
+
   test "user can call its flags by hash or collection" do
     user = User.create(
       last_name: 'Huberty',
@@ -59,20 +75,5 @@ class UserTest < ActiveSupport::TestCase
     assert_equal 2, user.flags.count
     assert user.flags[:visible]
     assert user.flags['visible']
-  end
-
-  test "user can update the value of a flag" do
-    user = User.create(
-      last_name: 'Huberty',
-      flags: {
-        visible: 'true',
-        'hidden' => 'true'
-      }
-    )
-    assert_equal 2, user.flags.count
-
-    user.update!(flags: { hidden: 'false'})
-    assert_equal 2, user.flags.count
-    assert_equal 'false', user.flags[:hidden]
   end
 end

@@ -7,3 +7,13 @@ def stringify(value)
     value
   end
 end
+
+def unstringify(value)
+  if value == 't' || value == 'true'
+    true
+  elsif value == 'f' || value == 'false' || value == nil
+    false
+  else
+    value
+  end
+end

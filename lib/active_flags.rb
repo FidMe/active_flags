@@ -21,7 +21,7 @@ module ActiveFlags
       define_method(:flags) do
         hash_of_flags = {}
         flags_as_collection.each do |flag|
-          hash_of_flags[flag.key.to_sym] = flag.value
+          hash_of_flags[flag.key.to_sym] = flag.converted_value
         end
         hash_of_flags.with_indifferent_access
       end
