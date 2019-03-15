@@ -1,4 +1,4 @@
-require_relative '../../../lib/utils/value_stringifier'
+require 'utils/value_stringifier'
 
 module ActiveFlags
   class Flag < ApplicationRecord
