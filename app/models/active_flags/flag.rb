@@ -7,7 +7,7 @@ module ActiveFlags
     validates :subject, :key, :value, presence: true
     validates :key, uniqueness: { scope: :subject }
 
-    def value_converted
+    def converted_value
       self.value = unstringify(value)
     end
   end

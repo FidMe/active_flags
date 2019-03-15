@@ -74,8 +74,8 @@ class FlatTest < ActiveSupport::TestCase
 
     assert_not_instance_of ActiveSupport::HashWithIndifferentAccess, flat.flags_as_collection
     assert_equal 4, flat.flags_as_collection.count
-    assert_respond_to flat.flags_as_collection.first, :value_converted
-    assert_instance_of ::TrueClass, flat.flags_as_collection.first.value_converted
+    assert_respond_to flat.flags_as_collection.first, :converted_value
+    assert_instance_of ::TrueClass, flat.flags_as_collection.first.converted_value
 
     assert_instance_of ActiveSupport::HashWithIndifferentAccess, flat.flags
     assert_equal 4, flat.flags.count
