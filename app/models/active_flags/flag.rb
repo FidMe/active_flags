@@ -7,6 +7,14 @@ module ActiveFlags
     validates :subject, :key, :value, presence: true
     validates :key, uniqueness: { scope: :subject }
 
+    def removing_duplicated_flags
+      grouped = ActiveFlags::Flag.where(subject_id: subject_id).group_by { |model| [model.key, model.subject_id, model.subject_type] }
+      grouped.values.each do |duplicates|
+        duplicates.shift
+        duplicates.each(&:destroy)
+      end
+    end
+
     def converted_value
       self.value = unstringify(value)
     end
