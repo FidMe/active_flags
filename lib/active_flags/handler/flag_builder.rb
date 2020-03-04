@@ -8,12 +8,8 @@ module ActiveFlags
 
       def save
         flag = ActiveFlags::Flag.find_or_initialize_by(subject: @resource, key: @flag_attributes[:key])
-        if ActiveFlags::Flag.where(subject: flag.subject, key: flag.key).any?
-          flag.removing_duplicated_flags
-        end
-
+        flag.removing_duplicated_flags!
         flag.update!(value: @flag_attributes[:value])
-
         @resource.flags_as_collection << flag
       end
     end
