@@ -1,3 +1,3 @@
 module ActiveFlags
-  VERSION = '0.3.4'
+  VERSION = '0.3.8'
 end
