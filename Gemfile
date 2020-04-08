@@ -12,4 +12,7 @@ gemspec
 # your gem to rubygems.org.
 
 # To use a debugger
-# gem 'byebug', group: [:development, :test]
+group :test do
+  gem 'byebug'
+  gem 'mocha'
+end

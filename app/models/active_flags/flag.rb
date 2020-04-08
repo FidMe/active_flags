@@ -7,6 +7,12 @@ module ActiveFlags
     validates :subject, :key, :value, presence: true
     validates :key, uniqueness: { scope: :subject }
 
+    after_save :notify_subject_flag_has_changed, if: proc { |flag| flag.saved_changes.key?('value') }
+    def notify_subject_flag_has_changed
+      subject.flag_has_changed(key, value) if subject&.respond_to?(:flag_has_changed)
+      true
+    end
+
     def removing_duplicated_needed?
       ActiveFlags::Flag.where(subject: subject, key: key).any?
     end
