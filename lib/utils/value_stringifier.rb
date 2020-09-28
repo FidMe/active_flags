@@ -1,7 +1,7 @@
 def stringify(value)
-  if value.nil? || value == true
+  if value.nil? || value == true || value == 'true'
     't'
-  elsif value == false
+  elsif value == false || value == 'false'
     'f'
   else
     value
