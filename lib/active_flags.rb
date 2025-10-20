@@ -13,7 +13,7 @@ module ActiveFlags
       has_many :flags_as_collection, class_name: 'ActiveFlags::Flag', as: :subject
 
       define_method(:flags=) do |flags|
-        Handler::FlagMapper.remap(authorized_flags, flags.symbolize_keys).each do |flag_attributes|
+        Handler::FlagMapper.remap(authorized_flags, (flags || {}).symbolize_keys).each do |flag_attributes|
           Handler::FlagBuilder.new(self, flag_attributes).save
         end
       end
