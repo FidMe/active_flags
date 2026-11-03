@@ -12,4 +12,11 @@ class ActiveFlags::Handler::FlagMapperTest < ActiveSupport::TestCase
     assert_instance_of Array, flags
     assert_instance_of Hash, flags.first
   end
+
+  test 'should remap flags sorted by key whatever the given order' do
+    keys = ->(flags) { ::ActiveFlags::Handler::FlagMapper.remap([], flags).map { |flag| flag[:key] } }
+
+    assert_equal [:hidden, :pinned, :visible], keys.call(visible: false, hidden: true, pinned: true)
+    assert_equal [:hidden, :pinned, :visible], keys.call(pinned: true, visible: false, hidden: true)
+  end
 end

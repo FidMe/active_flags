@@ -9,9 +9,12 @@ module ActiveFlags
         @flags = flags
       end
 
+      # Sorted by key so that every writer locks the flag rows in the same
+      # order: two concurrent transactions updating the same flags in a
+      # different order would otherwise deadlock.
       def remap
         @flags = FlagMappers::Authorizer.authorize(@authorized_flags, @flags)
-        FlagMappers::KeyValueMapper.remap(@flags)
+        FlagMappers::KeyValueMapper.remap(@flags).sort_by { |flag| flag[:key].to_s }
       end
 
       def self.remap(authorized_flags, flags)
